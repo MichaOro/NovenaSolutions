@@ -1,0 +1,46 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  maxWidth?: string;
+  align?: "left" | "center";
+  blur?: "sm" | "md" | "lg" | "xl";
+  tintClass?: string;
+  rounded?: string;
+  border?: string;
+  padding?: string;
+  shadow?: string;
+}
+const {
+  title,
+  subtitle,
+  maxWidth = "max-w-3xl",
+  align = "center",
+  blur = "xl",
+  // echte Milchglas-Defaults
+  tintClass = "bg-white/10 dark:bg-black/20",
+  rounded = "rounded-2xl",
+  border = "border border-white/10 dark:border-white/10",
+  padding = "p-10",
+  shadow  = "shadow-2xl",
+} = Astro.props as Props;
+
+const blurMap = {
+  sm: "backdrop-blur-sm",
+  md: "backdrop-blur-md",
+  lg: "backdrop-blur-lg",
+  xl: "backdrop-blur-xl",
+} as const;
+const blurClass = blurMap[blur] ?? "backdrop-blur-xl";
+
+const textAlign = align === "center" ? "text-center" : "text-left";
+const justify   = align === "center" ? "items-center" : "items-start";
+---
+
+<div class={`relative z-10 w-full ${maxWidth} mx-4 ${blurClass} backdrop-saturate-150
+             ${tintClass} ${border} ${rounded} ${padding} ${shadow}
+             ${textAlign} flex flex-col ${justify} gap-3`}>
+  {title && <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">{title}</h1>}
+  {subtitle && <p class="text-neutral-300">{subtitle}</p>}
+  <slot />
+</div>

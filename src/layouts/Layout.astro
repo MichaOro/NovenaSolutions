@@ -1,0 +1,124 @@
+---
+import "../styles/global.css";
+import ThemeToggle from "../components/ThemeToggle.tsx";
+import SiteFooter from "../components/SiteFooter.astro";
+import { NAV, HOME_ALIAS } from "../config/nav";
+
+interface Props { contentWidth?: string }
+const { contentWidth = "max-w-3xl" } = Astro.props as Props;
+
+// Pfad normalisieren und "/" auf HOME_ALIAS mappen
+const rawPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const currentPath = rawPath === "/" ? HOME_ALIAS : rawPath;
+const is = (p: string) => p === currentPath;
+---
+
+
+<html lang="de" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      const t = localStorage.getItem("theme");
+      const prefersDark = matchMedia("(prefers-color-scheme: light)").matches;
+      document.documentElement.classList.toggle("dark", t ? t === "dark" : prefersDark);
+    </script>
+  </head>
+
+  <body class="min-h-dvh flex flex-col bg-[var(--sand)] dark:bg-[var(--cyprus)]
+               text-[var(--cyprus)] dark:text-[var(--sand)] transition-colors duration-300">
+
+    <!-- LIGHT BG -->
+    <div aria-hidden="true" class="fixed inset-0 -z-10 block dark:hidden">
+      <svg width="100%" height="100%" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="g-light" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox" color-interpolation="linearRGB">
+            <stop offset="-0.05" style="stop-color:var(--light-1)"/>
+            <stop offset="0.12"  style="stop-color:var(--light-2)"/>
+            <stop offset="0.28"  style="stop-color:var(--light-3)"/>
+            <stop offset="0.48"  style="stop-color:var(--light-4)"/>
+            <stop offset="0.68"  style="stop-color:var(--light-5)"/>
+            <stop offset="0.88"  style="stop-color:var(--light-6)"/>
+            <stop offset="1.05"  style="stop-color:var(--light-7)"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="100%" height="100%" fill="url(#g-light)"/>
+      </svg>
+    </div>
+
+    <!-- DARK BG -->
+    <div aria-hidden="true" class="fixed inset-0 -z-10 hidden dark:block">
+      <svg width="100%" height="100%" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="g-dark" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox" color-interpolation="linearRGB">
+            <stop offset="-0.05" style="stop-color:var(--dark-1)"/>
+            <stop offset="0.12"  style="stop-color:var(--dark-2)"/>
+            <stop offset="0.28"  style="stop-color:var(--dark-3)"/>
+            <stop offset="0.48"  style="stop-color:var(--dark-4)"/>
+            <stop offset="0.68"  style="stop-color:var(--dark-5)"/>
+            <stop offset="0.88"  style="stop-color:var(--dark-6)"/>
+            <stop offset="1.05"  style="stop-color:var(--dark-7)"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="100%" height="100%" fill="url(#g-dark)"/>
+      </svg>
+    </div>
+
+    <!-- Noise -->
+    <div class="pointer-events-none fixed inset-0 block dark:hidden opacity-[0.04]
+                bg-[radial-gradient(circle,rgba(0,0,0,0.25)_0.5px,transparent_0.6px)]
+                [background-size:3px_3px]"></div>
+    <div class="pointer-events-none fixed inset-0 hidden dark:block opacity-[0.03]
+                bg-[radial-gradient(circle,rgba(255,255,255,0.25)_0.5px,transparent_0.6px)]
+                [background-size:3px_3px]"></div>
+
+    <!-- HEADER (leer, falls später Branding hinzukommt) -->
+    <header class="relative max-w-6xl mx-auto pt-10 pb-2 px-8"></header>
+
+    <!-- CONTENT SHELL -->
+    <main class="mx-auto w-full flex-1">
+      <section class={`mx-auto ${contentWidth}`} style="--thumb: 1.5rem; --panel-gutter: 1rem;">
+        <div class="mt-3 mb-2 grid grid-cols-[1fr_auto] items-center px-[var(--panel-gutter)]">
+          <!-- NAV aus zentraler Quelle -->
+          <nav class="pl-[var(--thumb)]">
+            <div class="flex items-center text-sm">
+              {NAV.map((i, idx) => (
+                <>
+                  <a
+                    href={i.href}
+                    aria-current={is(i.href) ? "page" : undefined}
+                    class="relative px-1.5 py-0.5 rounded-md transition-colors
+                           text-neutral-700 hover:text-neutral-900
+                           dark:text-white/70 dark:hover:text-white
+                           aria-[current=page]:text-emerald-600 dark:aria-[current=page]:text-emerald-300
+                           after:absolute after:left-1.5 after:right-1.5 after:-bottom-0.5 after:h-[2px] after:rounded-full
+                           aria-[current=page]:after:bg-emerald-500 dark:aria-[current=page]:after:bg-emerald-300"
+                  >
+                    {i.label}
+                  </a>
+                  {idx < NAV.length - 1 && (
+                    <span class="px-2 select-none text-neutral-400 dark:text-white/30">/</span>
+                  )}
+                </>
+              ))}
+            </div>
+          </nav>
+
+          <!-- Toggle rechts -->
+          <div class="justify-self-end text-xs md:text-sm">
+            <ThemeToggle client:load />
+          </div>
+        </div>
+
+        <div>
+          <slot />
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-auto">
+      <SiteFooter />
+    </footer>
+  </body>
+</html>

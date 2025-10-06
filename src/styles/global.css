@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  color-scheme: light dark;
+
+  /* Light (Sand) – SVG-Gradient */
+  --light-1:#f9f7f3; --light-2:#f7f4ef; --light-3:#f4f1ea;
+  --light-4:#f1eee7; --light-5:#ede9e1; --light-6:#e9e4db; --light-7:#e6e0d7;
+
+  /* Dark (Cyprus) – SVG-Gradient */
+  --dark-1:#000e0c; --dark-2:#001412; --dark-3:#001a16;
+  --dark-4:#001f1b; --dark-5:#002420; --dark-6:#002924; --dark-7:#07332f;
+
+  /* Palette */
+  --sand:#F0EDE5;   /* bg light  */
+  --cyprus:#004643; /* bg dark   */
+
+  /* Textfarben */
+  --text:#004643;          /* light */
+}
+html.dark{ --text:#F0EDE5; } /* dark */
+
+@layer base{
+  /* Hintergrund bleibt, Text global via --text */
+  body{
+    background-color:var(--sand);
+    color:var(--text);
+    @apply transition-colors duration-300;
+  }
+  html.dark body{ background-color:var(--cyprus); }
+
+  /* Alle typischen Textelemente erben die Farbe */
+  :where(h1,h2,h3,h4,h5,h6,p,span,small,strong,em,li,dt,dd,a,blockquote,
+         code,pre,th,td,figcaption,label,legend,button,input,textarea,select){
+    color:inherit !important;
+  }
+  a{ color:inherit !important; }
+
+  /* Platzhalter und Icons (currentColor) */
+  ::placeholder{ color:color-mix(in srgb,var(--text) 60%,transparent); opacity:1; }
+  svg{ color:var(--text); }
+  [fill="currentColor"]{ fill:currentColor; }
+  [stroke="currentColor"]{ stroke:currentColor; }
+}
+
+/* iOS Safari */
+@supports (-webkit-touch-callout:none){
+  html{ background-attachment:scroll !important; }
+}

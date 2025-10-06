@@ -1,0 +1,21 @@
+---
+import Layout from "../layouts/Layout.astro";
+import GlassPanel from "../components/GlassPanel.astro";
+---
+
+<Layout contentWidth="max-w-3xl">
+  <GlassPanel
+    title="Me-wehe"
+    subtitle="Feurige Chilis und Saucen"
+    maxWidth="max-w-none"      /* Panel nutzt die vom Layout gesetzte Breite */
+    blur="md"
+    rounded="rounded-2xl"
+    padding="p-10"
+    shadow="shadow-2xl"
+    align="center"
+  >
+    <p class="text-neutral-700 dark:text-neutral-300">
+      … dein Text …
+    </p>
+  </GlassPanel>
+</Layout>
