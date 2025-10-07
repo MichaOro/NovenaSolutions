@@ -5,14 +5,12 @@ import SiteFooter from "../components/SiteFooter.astro";
 import { NAV, HOME_ALIAS } from "../config/nav";
 
 interface Props { contentWidth?: string }
-const { contentWidth = "max-w-3xl" } = Astro.props as Props;
+const { contentWidth = "max-w-none" } = Astro.props as Props;
 
-// Pfad normalisieren und "/" auf HOME_ALIAS mappen
 const rawPath = Astro.url.pathname.replace(/\/+$/, "") || "/";
 const currentPath = rawPath === "/" ? HOME_ALIAS : rawPath;
 const is = (p: string) => p === currentPath;
 ---
-
 
 <html lang="de" class="h-full">
   <head>
@@ -20,7 +18,7 @@ const is = (p: string) => p === currentPath;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script is:inline>
       const t = localStorage.getItem("theme");
-      const prefersDark = matchMedia("(prefers-color-scheme: light)").matches;
+      const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches;
       document.documentElement.classList.toggle("dark", t ? t === "dark" : prefersDark);
     </script>
   </head>
@@ -32,17 +30,12 @@ const is = (p: string) => p === currentPath;
     <div aria-hidden="true" class="fixed inset-0 -z-10 block dark:hidden">
       <svg width="100%" height="100%" preserveAspectRatio="none">
         <defs>
-          <linearGradient id="g-light" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox" color-interpolation="linearRGB">
+          <linearGradient id="g-light" x1="0" y1="0" x2="0" y2="1">
             <stop offset="-0.05" style="stop-color:var(--light-1)"/>
-            <stop offset="0.12"  style="stop-color:var(--light-2)"/>
-            <stop offset="0.28"  style="stop-color:var(--light-3)"/>
-            <stop offset="0.48"  style="stop-color:var(--light-4)"/>
-            <stop offset="0.68"  style="stop-color:var(--light-5)"/>
-            <stop offset="0.88"  style="stop-color:var(--light-6)"/>
             <stop offset="1.05"  style="stop-color:var(--light-7)"/>
           </linearGradient>
         </defs>
-        <rect x="0" y="0" width="100%" height="100%" fill="url(#g-light)"/>
+        <rect x="0" y="0" width="100%" height="100%" fill="url(#g-light)" />
       </svg>
     </div>
 
@@ -50,17 +43,12 @@ const is = (p: string) => p === currentPath;
     <div aria-hidden="true" class="fixed inset-0 -z-10 hidden dark:block">
       <svg width="100%" height="100%" preserveAspectRatio="none">
         <defs>
-          <linearGradient id="g-dark" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox" color-interpolation="linearRGB">
+          <linearGradient id="g-dark" x1="0" y1="0" x2="0" y2="1">
             <stop offset="-0.05" style="stop-color:var(--dark-1)"/>
-            <stop offset="0.12"  style="stop-color:var(--dark-2)"/>
-            <stop offset="0.28"  style="stop-color:var(--dark-3)"/>
-            <stop offset="0.48"  style="stop-color:var(--dark-4)"/>
-            <stop offset="0.68"  style="stop-color:var(--dark-5)"/>
-            <stop offset="0.88"  style="stop-color:var(--dark-6)"/>
             <stop offset="1.05"  style="stop-color:var(--dark-7)"/>
           </linearGradient>
         </defs>
-        <rect x="0" y="0" width="100%" height="100%" fill="url(#g-dark)"/>
+        <rect x="0" y="0" width="100%" height="100%" fill="url(#g-dark)" />
       </svg>
     </div>
 
@@ -72,14 +60,13 @@ const is = (p: string) => p === currentPath;
                 bg-[radial-gradient(circle,rgba(255,255,255,0.25)_0.5px,transparent_0.6px)]
                 [background-size:3px_3px]"></div>
 
-    <!-- HEADER (leer, falls später Branding hinzukommt) -->
-    <header class="relative max-w-6xl mx-auto pt-10 pb-2 px-8"></header>
+    <!-- HEADER -->
+    <header class={`relative mx-auto ${contentWidth} px-8 pt-10 pb-2`}></header>
 
-    <!-- CONTENT SHELL -->
-    <main class="mx-auto w-full flex-1">
-      <section class={`mx-auto ${contentWidth}`} style="--thumb: 1.5rem; --panel-gutter: 1rem;">
-        <div class="mt-3 mb-2 grid grid-cols-[1fr_auto] items-center px-[var(--panel-gutter)]">
-          <!-- NAV aus zentraler Quelle -->
+    <!-- CONTENT -->
+    <main class="flex-1 w-full">
+      <section class={`mx-auto ${contentWidth}`} style="--thumb:1.5rem; --panel-gutter:1rem;">
+        <div class="mt-3 mb-2 grid grid-cols-[1fr_auto] items-center">
           <nav class="pl-[var(--thumb)]">
             <div class="flex items-center text-sm">
               {NAV.map((i, idx) => (
@@ -104,13 +91,12 @@ const is = (p: string) => p === currentPath;
             </div>
           </nav>
 
-          <!-- Toggle rechts -->
           <div class="justify-self-end text-xs md:text-sm">
             <ThemeToggle client:load />
           </div>
         </div>
 
-        <div>
+        <div class="px-[var(--panel-gutter)]">
           <slot />
         </div>
       </section>

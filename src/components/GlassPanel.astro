@@ -2,7 +2,6 @@
 interface Props {
   title?: string;
   subtitle?: string;
-  maxWidth?: string;
   align?: "left" | "center";
   blur?: "sm" | "md" | "lg" | "xl";
   tintClass?: string;
@@ -14,7 +13,7 @@ interface Props {
 const {
   title,
   subtitle,
-  maxWidth = "max-w-3xl",
+
   align = "center",
   blur = "xl",
   // echte Milchglas-Defaults
@@ -37,7 +36,7 @@ const textAlign = align === "center" ? "text-center" : "text-left";
 const justify   = align === "center" ? "items-center" : "items-start";
 ---
 
-<div class={`relative z-10 w-full ${maxWidth} mx-4 ${blurClass} backdrop-saturate-150
+<div class={`relative z-10 w-full max-w-none mx-4 ${blurClass} backdrop-saturate-150
              ${tintClass} ${border} ${rounded} ${padding} ${shadow}
              ${textAlign} flex flex-col ${justify}`}>
   {title && <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">{title}</h1>}
