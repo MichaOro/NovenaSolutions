@@ -9,19 +9,20 @@ interface Props {
   border?: string;
   padding?: string;
   shadow?: string;
+  width?: string; // optional: eigene max-width
 }
+
 const {
   title,
   subtitle,
-
   align = "center",
   blur = "xl",
-  // echte Milchglas-Defaults
   tintClass = "bg-white/10 dark:bg-black/20",
   rounded = "rounded-2xl",
   border = "border border-white/10 dark:border-white/10",
   padding = "p-10",
   shadow  = "shadow-2xl",
+  width   = "max-w-6xl", // Standard: gleich wie Footer/Layout
 } = Astro.props as Props;
 
 const blurMap = {
@@ -36,10 +37,10 @@ const textAlign = align === "center" ? "text-center" : "text-left";
 const justify   = align === "center" ? "items-center" : "items-start";
 ---
 
-<div class={`relative z-10 w-full max-w-none mx-4 ${blurClass} backdrop-saturate-150
+<div class={`relative z-10 w-full ${width} mx-auto ${blurClass} backdrop-saturate-150
              ${tintClass} ${border} ${rounded} ${padding} ${shadow}
              ${textAlign} flex flex-col ${justify}`}>
   {title && <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">{title}</h1>}
-  {subtitle && <p class="text-neutral-300">{subtitle}</p>}
+  {subtitle && <p class="text-neutral-300 mt-2">{subtitle}</p>}
   <slot />
 </div>
