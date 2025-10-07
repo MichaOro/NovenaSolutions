@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ThemeToggle from "../components/ThemeToggle.tsx";
+export const prerender = false;
 ---
 <Layout>
   <div slot="theme-toggle"><ThemeToggle client:load /></div>

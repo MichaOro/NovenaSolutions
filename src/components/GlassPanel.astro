@@ -39,7 +39,7 @@ const justify   = align === "center" ? "items-center" : "items-start";
 
 <div class={`relative z-10 w-full ${maxWidth} mx-4 ${blurClass} backdrop-saturate-150
              ${tintClass} ${border} ${rounded} ${padding} ${shadow}
-             ${textAlign} flex flex-col ${justify} gap-3`}>
+             ${textAlign} flex flex-col ${justify}`}>
   {title && <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">{title}</h1>}
   {subtitle && <p class="text-neutral-300">{subtitle}</p>}
   <slot />

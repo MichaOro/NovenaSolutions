@@ -1,0 +1,66 @@
+---
+import Layout from "../layouts/Layout.astro";
+import GlassPanel from "../components/GlassPanel.astro";
+---
+
+<Layout contentWidth="max-w-3xl">
+  <GlassPanel
+    title="Widerrufsbelehrung"
+    subtitle="Informationen zum Widerrufsrecht für Verbraucher"
+    maxWidth="max-w-none"
+    blur="md"
+    rounded="rounded-2xl"
+    padding="p-10"
+    shadow="shadow-2xl"
+    align="left"
+  >
+    <div class="text-neutral-700 dark:text-neutral-300 space-y-6 text-sm leading-relaxed mt-6 break-words hyphens-auto">
+      <section>
+        <h3 class="text-md font-semibold text-cyprus dark:text-sand mb-1">1. Widerrufsrecht</h3>
+        <p>Verbraucher haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen. Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die Ware(n) in Besitz genommen haben bzw. hat.</p>
+        <p>Für Bestellungen, die über Etsy getätigt werden, gilt die dort bereitgestellte
+          <a href="https://www.etsy.com/legal/policy/buyers-rights" target="_blank" rel="noopener" class="underline">Widerrufs- und Rückgaberichtlinie von Etsy</a>.
+        </p>
+      </section>
+
+      <section>
+        <h3 class="text-md font-semibold text-cyprus dark:text-sand mb-1">2. Ausübung des Widerrufs</h3>
+        <p>Sie können Ihr Widerrufsrecht über die Etsy-Nachrichtenfunktion oder direkt per E-Mail an <a href="mailto:info@novena.solutions" class="underline">info@novena.solutions</a> ausüben. Eine formlose Mitteilung genügt.</p>
+      </section>
+
+      <section>
+        <h3 class="text-md font-semibold text-cyprus dark:text-sand mb-1">3. Folgen des Widerrufs</h3>
+        <p>Wenn Sie widerrufen, erstatten wir alle Zahlungen einschließlich der Lieferkosten (außer Mehrkosten für eine abweichende Versandart) binnen vierzehn Tagen nach Eingang des Widerrufs über dasselbe Zahlungsmittel.</p>
+        <p>Wir können die Rückzahlung verweigern, bis die Ware eingegangen ist oder Sie den Versand nachgewiesen haben. Die unmittelbaren Rücksendekosten tragen Sie.</p>
+      </section>
+
+      <section>
+        <h3 class="text-md font-semibold text-cyprus dark:text-sand mb-1">4. Ausschluss des Widerrufsrechts</h3>
+        <p>Kein Widerruf bei individuell angefertigten Waren oder eindeutig personalisierten Produkten. Bei digitalen Inhalten erlischt das Widerrufsrecht mit Beginn der Ausführung nach Ihrer ausdrücklichen Zustimmung.</p>
+      </section>
+
+      <section>
+        <h3 class="text-md font-semibold text-cyprus dark:text-sand mb-1">5. Muster-Widerrufsformular</h3>
+        <pre class="whitespace-pre-wrap break-words overflow-x-auto text-xs p-4 rounded-md">
+An:
+Novena Solutions
+Inhaber: Michael Orologas
+Bonfelder Straße 42
+74078 Heilbronn
+E-Mail: info@novena.solutions
+
+Hiermit widerrufe(n) ich den von mir abgeschlossenen Vertrag über den Kauf der folgenden Waren / die Erbringung der folgenden Dienstleistung:
+_________________________________________________________
+Bestellt am: _____________________
+Erhalten am: _____________________
+
+Name des/der Verbraucher(s): ___________________________
+Anschrift des/der Verbraucher(s): ________________________
+
+Datum: _____________________
+Unterschrift (nur bei Mitteilung auf Papier)
+        </pre>
+      </section>
+    </div>
+  </GlassPanel>
+</Layout>

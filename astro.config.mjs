@@ -10,6 +10,6 @@ export default defineConfig({
   adapter: vercel(),
   integrations: [tailwind(), react()],
   redirects: {
-    "/": "/me", // HOME_ALIAS
+    "/": "/me",
   },
 });
