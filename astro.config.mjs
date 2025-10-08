@@ -9,7 +9,5 @@ export default defineConfig({
   output: "server",
   adapter: vercel(),
   integrations: [tailwind(), react()],
-  redirects: {
-    "/": "/home",
-  },
+  redirects: { "/": "/home" }
 });

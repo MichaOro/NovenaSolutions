@@ -18,7 +18,6 @@ const is = (p: string) => p === currentPath;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script is:inline>
-      // Nur wenn User etwas gewählt hat, nutzen; sonst Light als Default.
       const t = localStorage.getItem("theme");
       const hasChoice = t === "light" || t === "dark";
       const useDark = hasChoice ? t === "dark" : false; // default: light

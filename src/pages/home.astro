@@ -1,21 +1,73 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import GlassPanel from "../components/GlassPanel.astro";
+import ExpandableCards from "../components/ExpandableCards";
+
+const items = [
+{
+  id: "a",
+  title: "Abschnitt A",
+  teaser: "Lorem ipsum…",
+  span: 2, rows: 12, expandMode: "full",
+  teaserAlign: "center", teaserVAlign: "middle", teaserSize: "md",
+  // überschreibt nur hier:
+  titleColorVar: "--cardtitel",         // bleibt die globale Titel-Var
+  teaserColorVar: "--text",             // oder z.B. "--tip2"
+},
+  {
+    id: "b",
+    title: "Abschnitt B",
+    teaser: "Sed do eiusmod tempor incididunt ut labore…",
+    span: 2,
+    rows: 12,
+    expandMode: "inline",
+    expandTo: { rows: 32 },          // behält Breite, wächst in Tiefe
+    content: `<p>Fusce nec tellus sed augue semper porta…</p>`,
+  },
+  {
+    id: "c",
+    title: "Abschnitt C",
+    teaser: "Ut enim ad minim veniam…",
+    span: 4,
+    rows: 6,
+    expandMode: "inline",
+    expandTo: { span: 4, rows: 28 }, // 4×28 beim Expand
+    content: `<p>Curabitur sodales ligula in libero…</p>`,
+  },
+  {
+    id: "d",
+    title: "Abschnitt D",
+    teaser: "XS/1-Slot Beispiel…",
+    span: 1,
+    rows: 16,
+    expandMode: "inline",
+    expandTo: { span: 2, rows: 24 }, // von 1×16 auf 2×24
+    content: `<p>Kleiner Block, der nur in die Tiefe expandiert.</p>`,
+  },
+  {
+      id: "e",
+      title: "Abschnitt E",
+      teaser: "XS/1-Slot Beispiel…",
+      span: 1,
+      rows: 16,
+      expandMode: "inline",
+      expandTo: { span: 2, rows: 24 }, // von 1×16 auf 2×24
+      content: `<p>Kleiner Block, der nur in die Tiefe expandiert.</p>`,
+    },
+];
 ---
 
 <Layout>
   <GlassPanel
-    title="Me-wehe"
-    subtitle="Feurige Chilis und Saucen"
-    maxWidth="max-w-none"      /* Panel nutzt die vom Layout gesetzte Breite */
+    title="Novena Solutions"
+    subtitle="Individuelle Kleinchargen. Präzise, transparent, nachhaltig."
+    maxWidth="max-w-none"
     blur="md"
     rounded="rounded-2xl"
     padding="p-10"
     shadow="shadow-2xl"
     align="center"
   >
-    <p class="text-neutral-700 dark:text-neutral-300">
-      … dein Text …
-    </p>
+    <ExpandableCards items={items} client:load />
   </GlassPanel>
 </Layout>

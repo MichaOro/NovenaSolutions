@@ -5,47 +5,65 @@
 :root{
   color-scheme: light dark;
 
-  /* Light (Sand) – SVG-Gradient */
+  /* Light (Sand) */
   --light-1:#f9f7f3; --light-2:#f7f4ef; --light-3:#f4f1ea;
   --light-4:#f1eee7; --light-5:#ede9e1; --light-6:#e9e4db; --light-7:#e6e0d7;
 
-  /* Dark (Cyprus) – SVG-Gradient */
+  /* Dark (Cyprus) */
   --dark-1:#000e0c; --dark-2:#001412; --dark-3:#001a16;
   --dark-4:#001f1b; --dark-5:#002420; --dark-6:#002924; --dark-7:#07332f;
 
   /* Palette */
-  --sand:#F0EDE5;   /* bg light  */
-  --cyprus:#004643; /* bg dark   */
+  --sand:#F0EDE5;
+  --cyprus:#004643;
+  --tip:#F0EDE5;
+  --tip2:#0A5C54;
+  --cardtitle-light: #FFFFFF;   /* Light-Mode Header-Titel */
+  --cardtitle-dark:  #000000;   /* Dark-Mode Header-Titel */
+  --cardtitel: var(--cardtitle-light);  /* aktive Titelfarbe (Kompat.) */
 
-  /* Textfarben */
-  --text:#004643;          /* light */
+  /* Text */
+  --text:#004643;
+
+  /* Surfaces (flexibel tauschbar) */
+  --panel-bg: color-mix(in srgb, var(--sand) 92%, white 8%);
+  --card-bg: #FFFFFF;
+  --card-border: color-mix(in srgb, #000 6%, transparent);
+  --card-head-bg: color-mix(in srgb, var(--tip) 75%, white 25%);
+  --card-head-hover: color-mix(in srgb, var(--tip2) 65%, white 35%);
 }
-html.dark{ --text:#F0EDE5; } /* dark */
+html.dark{
+  --text:#F0EDE5;
+  --panel-bg: color-mix(in srgb, var(--cyprus) 85%, black 15%);
+  --card-bg: color-mix(in srgb, var(--dark-7) 75%, black 25%);
+  --card-border: color-mix(in srgb, #fff 12%, transparent);
+  --card-head-bg: color-mix(in srgb, var(--dark-6) 70%, black 30%);
+  --card-head-hover: color-mix(in srgb, var(--dark-6) 50%, black 50%);
+  --cardtitel: var(--cardtitle-dark);
+}
 
 @layer base{
-  /* Hintergrund bleibt, Text global via --text */
-  body{
-    background-color:var(--sand);
-    color:var(--text);
-    @apply transition-colors duration-300;
-  }
+  body{ background-color:var(--sand); color:var(--text); @apply transition-colors duration-300; }
   html.dark body{ background-color:var(--cyprus); }
 
-  /* Alle typischen Textelemente erben die Farbe */
   :where(h1,h2,h3,h4,h5,h6,p,span,small,strong,em,li,dt,dd,a,blockquote,
          code,pre,th,td,figcaption,label,legend,button,input,textarea,select){
     color:inherit !important;
   }
   a{ color:inherit !important; }
-
-  /* Platzhalter und Icons (currentColor) */
   ::placeholder{ color:color-mix(in srgb,var(--text) 60%,transparent); opacity:1; }
   svg{ color:var(--text); }
   [fill="currentColor"]{ fill:currentColor; }
   [stroke="currentColor"]{ stroke:currentColor; }
 }
 
-/* iOS Safari */
-@supports (-webkit-touch-callout:none){
-  html{ background-attachment:scroll !important; }
+/* Optional: Hilfsklassen, falls du ohne Arbitrary-Values arbeiten willst */
+@layer components{
+  .panel-surface{ background:var(--panel-bg); }
+  .card-surface{ background:var(--card-bg); border:1px solid var(--card-border); }
+  .card-head{ background:var(--card-head-bg); }
+  .card-head:hover{ background:var(--card-head-hover); }
 }
+
+/* iOS Safari */
+@supports (-webkit-touch-callout:none){ html{ background-attachment:scroll !important; } }
