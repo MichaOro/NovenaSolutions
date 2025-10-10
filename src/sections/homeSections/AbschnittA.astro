@@ -1,0 +1,59 @@
+---
+import ExpandableCards from "../../components/ExpandableCards";
+
+// nur Beispielinhalte; passe Titel/Text/Spans an
+const items = [
+  {
+    id: "a1",
+    title: "Novena Solutions",
+    teaser: "Unabhängiges Kleingewerbe. Fokus auf Qualität und Klarheit.",
+    span: 2, rows: 12, expandMode: "full",
+    expandTo: { span: 6, rows: 36 },
+    teaserAlign: "left", teaserVAlign: "top", teaserSize: "md",
+    // kein Override nötig: nutzt --cardtitel
+    // titleColorVar: "--cardtitel",
+    teaserColorVar: "--text",
+    content: `<p>Kurzer Abschnitt über Identität, Haltung und Arbeitsweise.</p>`,
+  },
+  {
+    id: "a2",
+    title: "Vision & Haltung",
+    teaser: "Nachhaltige Entscheidungen. Transparente Prozesse.",
+    span: 2, rows: 12, expandMode: "full",
+    expandTo: { span: 6, rows: 36 },
+    teaserAlign: "left", teaserVAlign: "top", teaserSize: "md",
+    // kein Override nötig: nutzt --cardtitel
+    // titleColorVar: "--cardtitel",
+    teaserColorVar: "--text",
+    content: `<p>Mehr Text bei Bedarf. Expand zeigt Details.</p>`,
+    },
+  {
+    id: "a3",
+    title: "Arbeitsweise",
+    teaser: "Strukturiert, analytisch, dokumentiert",
+    span: 2, rows: 12, expandMode: "full",
+    expandTo: { span: 6, rows: 36 },
+    teaserAlign: "left", teaserVAlign: "top", teaserSize: "md",
+    // kein Override nötig: nutzt --cardtitel
+    // titleColorVar: "--cardtitel",
+    teaserColorVar: "--text",
+    content: `<ul><li>Iterativ</li><li>Messbar</li><li>Nachvollziehbar</li></ul>`,
+    },
+      {
+        id: "a4",
+        title: "Arbeitsweise",
+        teaser: "Strukturiert, analytisch, dokumentiert",
+        span: 5, rows: 12, expandMode: "full",
+        expandTo: { span: 6, rows: 36 },
+        teaserAlign: "left", teaserVAlign: "top", teaserSize: "md",
+        // kein Override nötig: nutzt --cardtitel
+        // titleColorVar: "--cardtitel",
+        teaserColorVar: "--text",
+        content: `<ul><li>Iterativ</li><li>Messbar</li><li>Nachvollziehbar</li></ul>`,
+        },
+];
+---
+
+<section class="mx-auto max-w-6xl px-8 my-8">
+  <ExpandableCards items={items} client:load />
+</section>

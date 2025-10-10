@@ -2,68 +2,124 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =========================================================
+   Design-Tokens (Farben, Skalen) – global und themenfähig
+   ========================================================= */
 :root{
   color-scheme: light dark;
 
-  /* Light (Sand) */
+  /* Helligkeits-Ramp (Light Theme Hintergrundverlauf) */
   --light-1:#f9f7f3; --light-2:#f7f4ef; --light-3:#f4f1ea;
   --light-4:#f1eee7; --light-5:#ede9e1; --light-6:#e9e4db; --light-7:#e6e0d7;
 
-  /* Dark (Cyprus) */
+  /* Dunkelheits-Ramp (Dark Theme Hintergrundverlauf) */
   --dark-1:#000e0c; --dark-2:#001412; --dark-3:#001a16;
   --dark-4:#001f1b; --dark-5:#002420; --dark-6:#002924; --dark-7:#07332f;
 
-  /* Palette */
+  /* Marken-Palette */
   --sand:#F0EDE5;
   --cyprus:#004643;
-  --tip:#F0EDE5;
-  --tip2:#0A5C54;
-  --cardtitle-light: #FFFFFF;   /* Light-Mode Header-Titel */
-  --cardtitle-dark:  #000000;   /* Dark-Mode Header-Titel */
-  --cardtitel: var(--cardtitle-light);  /* aktive Titelfarbe (Kompat.) */
 
-  /* Text */
+  /* Typografie-Farbe (Default-Text) */
   --text:#004643;
 
-  /* Surfaces (flexibel tauschbar) */
+  /* Karten/Pane-Flächen und Ränder */
   --panel-bg: color-mix(in srgb, var(--sand) 92%, white 8%);
-  --card-bg: #FFFFFF;
+  --card-bg:#FFFFFF;
   --card-border: color-mix(in srgb, #000 6%, transparent);
-  --card-head-bg: color-mix(in srgb, var(--tip) 75%, white 25%);
-  --card-head-hover: color-mix(in srgb, var(--tip2) 65%, white 35%);
+
+  /* Interaktion: Hover-Intensität und Header-Hintergründe */
+  --hover-x: 10%;
+  --card-head-bg-light: var(--cyprus);
+  --card-head-bg-dark:  var(--sand);
+
+  /* Kartentitel-Farben (logische Variablen für Komponenten) */
+  --cardtitle-light: var(--sand);   /* Titel im Light Theme */
+  --cardtitle-dark:  var(--cyprus); /* Titel im Dark Theme */
+  --cardtitel: var(--cardtitle-light); /* aktuell aktive Titelfarbe */
 }
+
+/* =========================================================
+   Dark Theme – überschreibt nur abweichende Tokens
+   ========================================================= */
 html.dark{
   --text:#F0EDE5;
+
   --panel-bg: color-mix(in srgb, var(--cyprus) 85%, black 15%);
   --card-bg: color-mix(in srgb, var(--dark-7) 75%, black 25%);
   --card-border: color-mix(in srgb, #fff 12%, transparent);
-  --card-head-bg: color-mix(in srgb, var(--dark-6) 70%, black 30%);
-  --card-head-hover: color-mix(in srgb, var(--dark-6) 50%, black 50%);
+
+  /* Header-Hintergrund und Hover im Dark Theme */
+  --card-head-bg: var(--card-head-bg-dark);
+  --card-head-hover: color-mix(in srgb, black var(--hover-x), var(--card-head-bg-dark));
+
+  /* aktive Kartentitel-Farbe im Dark Theme */
   --cardtitel: var(--cardtitle-dark);
 }
 
-@layer base{
-  body{ background-color:var(--sand); color:var(--text); @apply transition-colors duration-300; }
-  html.dark body{ background-color:var(--cyprus); }
+/* Light-Ableitungen (nur im Light nötig) */
+:root{
+  --card-head-bg: var(--card-head-bg-light);
+  --card-head-hover: color-mix(in srgb, white var(--hover-x), var(--card-head-bg-light));
+}
 
+/* =========================================================
+   Base Layer – Reset & globale Verhalten
+   ========================================================= */
+@layer base{
+  body{
+    background-color: var(--sand);
+    color: var(--text);
+    @apply transition-colors duration-300;
+  }
+  html.dark body{ background-color: var(--cyprus); }
+
+  /* Einheitliche Textfarbe-Vererbung für Standard-Elemente */
   :where(h1,h2,h3,h4,h5,h6,p,span,small,strong,em,li,dt,dd,a,blockquote,
          code,pre,th,td,figcaption,label,legend,button,input,textarea,select){
-    color:inherit !important;
+    color: inherit !important;
   }
-  a{ color:inherit !important; }
-  ::placeholder{ color:color-mix(in srgb,var(--text) 60%,transparent); opacity:1; }
-  svg{ color:var(--text); }
-  [fill="currentColor"]{ fill:currentColor; }
-  [stroke="currentColor"]{ stroke:currentColor; }
+
+  a{ color: inherit !important; }
+  ::placeholder{ color: color-mix(in srgb, var(--text) 60%, transparent); opacity: 1; }
+
+  /* SVGs folgen dem Textfarb-System */
+  svg{ color: var(--text); }
+  [fill="currentColor"]{ fill: currentColor; }
+  [stroke="currentColor"]{ stroke: currentColor; }
 }
 
-/* Optional: Hilfsklassen, falls du ohne Arbitrary-Values arbeiten willst */
+/* =========================================================
+   Components Layer – wiederverwendbare Oberflächen & Typo
+   ========================================================= */
 @layer components{
-  .panel-surface{ background:var(--panel-bg); }
-  .card-surface{ background:var(--card-bg); border:1px solid var(--card-border); }
-  .card-head{ background:var(--card-head-bg); }
-  .card-head:hover{ background:var(--card-head-hover); }
+  /* Pane/Karten-Flächen */
+  .panel-surface{ background: var(--panel-bg); }
+  .card-surface{ background: var(--card-bg); border: 1px solid var(--card-border); }
+
+  /* Karten-Header-Hintergründe mit Hover */
+  .card-head{ background: var(--card-head-bg); }
+  .card-head:hover{ background: var(--card-head-hover); }
+
+  /* Kartentitel – nutzt logische Variable `--cardtitel` */
+  .card-heading{
+    color: var(--cardtitel) !important;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: .01em;
+    font-size: 1rem;
+  }
+  @media (min-width: 640px){
+    .card-heading{ font-size: 1.0625rem; }
+  }
+
+  /* Chevron im Header folgt derselben Titelfarbe */
+  .card-chevron{ color: var(--cardtitel) !important; }
 }
 
-/* iOS Safari */
-@supports (-webkit-touch-callout:none){ html{ background-attachment:scroll !important; } }
+/* =========================================================
+   Plattform-Sonderfälle
+   ========================================================= */
+@supports (-webkit-touch-callout:none){
+  html{ background-attachment: scroll !important; }
+}
